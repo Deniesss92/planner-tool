@@ -10,12 +10,17 @@
   <h1>Capaciteit Planner</h1>
 
   <form id="plannerForm">
-    <input type="text" id="naam" placeholder="Naam" required>
-    <input type="number" id="uren" placeholder="Uren" required>
+    <input type="text" id="naam" placeholder="Naam medewerker" required>
+    <input type="text" id="taak" placeholder="Taak" required>
+    <input type="number" id="uren" placeholder="Aantal uren" required>
     <button type="submit">Toevoegen</button>
   </form>
 
+  <h2>Overzicht Taken</h2>
   <ul id="planningLijst"></ul>
+
+  <h2>Capaciteit Controle</h2>
+  <div id="capaciteitOverzicht"></div>
 
   <script src="script.js"></script>
 </body>
