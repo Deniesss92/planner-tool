@@ -5,10 +5,13 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Capaciteit Planner</title>
   <link rel="stylesheet" href="style.css">
+  <!-- Chart.js CDN -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 <body>
   <h1>Capaciteit Planner</h1>
 
+  <!-- Formulier voor het toevoegen van medewerkers -->
   <form id="plannerForm">
     <input type="text" id="naam" placeholder="Naam medewerker" required>
     <input type="text" id="afdeling" placeholder="Afdeling" required>
@@ -23,7 +26,10 @@
   <h2>Capaciteit Controle</h2>
   <div id="capaciteitOverzicht"></div>
 
+  <!-- Canvas voor de grafiek -->
+  <h2>Capaciteit Grafiek</h2>
+  <canvas id="capaciteitGrafiek" width="400" height="200"></canvas>
+
   <script src="script.js"></script>
 </body>
 </html>
-

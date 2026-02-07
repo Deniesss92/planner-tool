@@ -1,6 +1,7 @@
 const form = document.getElementById("plannerForm");
 const lijst = document.getElementById("planningLijst");
 const capaciteitOverzicht = document.getElementById("capaciteitOverzicht");
+const ctx = document.getElementById("capaciteitGrafiek").getContext("2d");
 
 // Dit zal alle ingevoerde gegevens opslaan
 let medewerkersData = JSON.parse(localStorage.getItem("medewerkersData")) || [];
@@ -28,6 +29,15 @@ function toonLijst() {
       const li = document.createElement("li");
       li.textContent = `${item.naam} werkt ${item.uren} uur aan ${item.taak}`;
 
+      // Kleurcodering: te veel uren in het rood, te weinig in het groen
+      if (item.uren > 8) {
+        li.style.backgroundColor = "#f44336"; // Rood
+      } else if (item.uren < 8) {
+        li.style.backgroundColor = "#8BC34A"; // Groen
+      } else {
+        li.style.backgroundColor = "#FFEB3B"; // Geel voor exact 8 uur
+      }
+
       // Verwijder-knop toevoegen
       const deleteButton = document.createElement("button");
       deleteButton.textContent = "Verwijderen";
@@ -41,6 +51,9 @@ function toonLijst() {
 
   // Bereken de capaciteit
   berekenCapaciteit();
+
+  // Toon de grafiek
+  toonGrafiek(afdelingen);
 }
 
 // Capaciteit berekenen en tonen
@@ -65,6 +78,36 @@ function berekenCapaciteit() {
   }
 
   capaciteitOverzicht.textContent = `Totaal ingeplande uren: ${totaalUren} uur. ${status}`;
+}
+
+// Functie om de grafiek te tonen
+function toonGrafiek(afdelingen) {
+  const labels = Object.keys(afdelingen); // Afdelingen
+  const data = labels.map(afdeling => {
+    return afdelingen[afdeling].reduce((totaal, item) => totaal + item.uren, 0); // Totaal uren per afdeling
+  });
+
+  const grafiek = new Chart(ctx, {
+    type: 'bar',
+    data: {
+      labels: labels, // Afdelingsnamen
+      datasets: [{
+        label: 'Totaal ingeplande uren per afdeling',
+        data: data,
+        backgroundColor: '#4CAF50', // Groene balken
+        borderColor: '#388E3C',
+        borderWidth: 1
+      }]
+    },
+    options: {
+      responsive: true,
+      scales: {
+        y: {
+          beginAtZero: true
+        }
+      }
+    }
+  });
 }
 
 // Functie om medewerker te verwijderen
